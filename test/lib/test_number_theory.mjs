@@ -1,8 +1,8 @@
 import test  from 'tape';
 
-import { abs, multInverse, pow } from '../../lib/number_theory.mjs';
+import { abs, multInverse, pow, isSquare } from '../../lib/number_theory.mjs';
 
-test('absolute value test', function (t){
+test('absolute value test', function (t) {
 	t.equal(abs(5n), 5n, "abs positive integer");
 
 	t.equal(abs(BigInt(-5)), 5n, "abs negative integer");
@@ -12,7 +12,7 @@ test('absolute value test', function (t){
 	t.end();
 });
 
-test('multiplicative inverse test', function (t){
+test('multiplicative inverse test', function (t) {
 	t.equal(multInverse(5n, 5n), null, "same integer");
 
 	t.equal(multInverse(4n, 6n), null, "integers with common factors");
@@ -36,7 +36,7 @@ test('multiplicative inverse test', function (t){
 	t.end();
 });
 
-test('power test', function (t){
+test('power test', function (t) {
 	t.equal(pow(3n, 2n, 20n), 9n, "no modulus needed");
 
 	t.equal(pow(3n, 0n, 20n), 1n, "exponent 0");
@@ -50,6 +50,16 @@ test('power test', function (t){
 	t.equal(pow(15n, 4n, 12n), 9n, "n > modulus");
 
 	t.equal(pow(3n, BigInt(-1), 10n), null, "negative exponent");
+
+	t.end();
+});
+
+test('is square test', function (t) {
+	t.equal(isSquare(1n, 5n), true, "1 is always a square");
+
+	t.equal(isSquare(5n, 13n), false, "5 is not a square mod 13");
+
+	t.equal(isSquare(3n, 13n), true, "4^2 is 3 mod 13");
 
 	t.end();
 });
