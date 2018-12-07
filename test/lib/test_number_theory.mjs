@@ -1,47 +1,55 @@
 import test  from 'tape';
 
-import { abs, multInverse } from '../../lib/number_theory.mjs';
+import { abs, multInverse, pow } from '../../lib/number_theory.mjs';
 
 test('absolute value test', function (t){
-	t.equal(abs(5n), 5n);
+	t.equal(abs(5n), 5n, "abs positive integer");
 
-	t.equal(abs(BigInt(-5)), 5n);
+	t.equal(abs(BigInt(-5)), 5n, "abs negative integer");
 
-	t.equal(abs(0n), 0n);
+	t.equal(abs(0n), 0n, "abs(0n)");
 
 	t.end();
 });
 
 test('multiplicative inverse test', function (t){
-	// Same integer, inverse should not exist
-	t.equal(multInverse(5n, 5n), null);
+	t.equal(multInverse(5n, 5n), null, "same integer");
 
-	// Integers with common factors, inverse should not exist
-	t.equal(multInverse(4n, 6n), null);
+	t.equal(multInverse(4n, 6n), null, "integers with common factors");
 
-	// Relatively prime integers, inverse should exist and be computed correctly
-	t.equal(multInverse(4n, 15n), 4n);
+	t.equal(multInverse(4n, 15n), 4n, "relatively prime integers");
 
-	// Relatively prime integers, negative n. Inverse should exist, be computed correctly, and be in a reduced residue class.
-	t.equal(multInverse(BigInt(-4), 15n), 11n);
+	t.equal(multInverse(BigInt(-4), 15n), 11n, "relatively prime integers, negative n.");
 
-	// Relatively prime integers, negative modulus. Inverse should exist, be computed correctly, and be in a reduced residue class.
-	t.equal(multInverse(4n, BigInt(-15)), 4n);
+	t.equal(multInverse(4n, BigInt(-15)), 4n, "relatively prime integers, negative modulus.");
 
-	// Relatively prime integers, both negative. Inverse should exist, be computed correctly, and be in a reduced residue class.
-	t.equal(multInverse(BigInt(-4), BigInt(-15)), 11n);
+	t.equal(multInverse(BigInt(-4), BigInt(-15)), 11n, "relatively prime integers, both negative.");
 
-	// Relatively prime integers, |n| > |modulus|
-	t.equal(multInverse(19n, 15n), 4n);
+	t.equal(multInverse(19n, 15n), 4n, "relatively prime integers, |n| > |modulus|");
 
-	// Relatively prime integers, negative n, |n| > |modulus|
-	t.equal(multInverse(BigInt(-19), 15n), 11n);
+	t.equal(multInverse(BigInt(-19), 15n), 11n, "relatively prime integers, negative n, |n| > |modulus|");
 
-	// Relatively prime integers, negative modulus, |n| > |modulus|
-	t.equal(multInverse(19n, BigInt(-15)), 4n);
+	t.equal(multInverse(19n, BigInt(-15)), 4n, "relatively prime integers, negative modulus, |n| > |modulus|");
 
-	// Relatively prime integers, both negative, |n| > |modulus|
-	t.equal(multInverse(BigInt(-19), BigInt(-15)), 11n);
+	t.equal(multInverse(BigInt(-19), BigInt(-15)), 11n, "relatively prime integers, both negative, |n| > |modulus|");
+
+	t.end();
+});
+
+test('power test', function (t){
+	t.equal(pow(3n, 2n, 20n), 9n, "no modulus needed");
+
+	t.equal(pow(3n, 0n, 20n), 1n, "exponent 0");
+
+	t.equal(pow(3n, 2n, 5n), 4n, "modulus needed at end");
+
+	t.equal(pow(5n, 4n, 12n), 1n, "modulus needed in intermediate calculations");
+
+	t.equal(pow(5n, 5n, 12n), 5n, "exponent which is not power of 2");
+
+	t.equal(pow(15n, 4n, 12n), 9n, "n > modulus");
+
+	t.equal(pow(3n, BigInt(-1), 10n), null, "negative exponent");
 
 	t.end();
 });
