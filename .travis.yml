@@ -1,7 +1,8 @@
 language: node_js
 node_js:
-	- "node"
+ - "node"
 
 before_script:
-	- npm install tape --save-dev
+ - npm install tape --save-dev
+
 script: node --experimental-modules test/*/*.mjs
