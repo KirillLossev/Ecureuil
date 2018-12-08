@@ -1,3 +1,7 @@
+Travis-CI: [![Build Status](https://travis-ci.org/KirillLossev/Ecureuil.svg?branch=master)](https://travis-ci.org/KirillLossev/Ecureuil)
+
+---
+
 # Écureuil
 An elliptic curve calculator for demonstrating commutations with elliptic curves.
 
