@@ -1,6 +1,6 @@
 import test  from 'tape';
 
-import { abs, multInverse, pow, isSquare } from '../../lib/number_theory.mjs';
+import { abs, multInverse, pow, isSquare, unsquare } from '../../lib/number_theory.mjs';
 
 test('absolute value test', function (t) {
 	t.equal(abs(5n), 5n, "abs positive integer");
@@ -60,6 +60,24 @@ test('is square test', function (t) {
 	t.equal(isSquare(5n, 13n), false, "5 is not a square mod 13");
 
 	t.equal(isSquare(3n, 13n), true, "4^2 is 3 mod 13");
+
+	t.equal(isSquare(0n, 13n), true,  "0 is a square");
+
+	t.equal(isSquare(26n, 13n), true, "multiples of p are squares")
+
+	t.end();
+});
+
+test('unsquare test', function (t) {
+	t.deepEqual(unsquare(5n, 13n), new Set(), "5 is not a square mod 13");
+
+	t.deepEqual(unsquare(0n, 13n), new Set([0n]), "0 is the only unsquare of 0");
+
+	t.deepEqual(unsquare(2n, 7n), new Set([3n, 4n]), "p≡3 mod 4, unsquares from Lagrange");
+
+	t.deepEqual(unsquare(3n, 13n), new Set([4n, 9n]), "p≡5 mod 8, unsquares from Legendre");
+
+	t.deepEqual(unsquare(2n, 17n), new Set([6n, 11n]), "p≡1 mod 8, unsquares from Tonelli-Shanks");
 
 	t.end();
 });
